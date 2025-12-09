@@ -1,38 +1,55 @@
-import matplotlib.pyplot as plt
-import pandas as pd
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-MERGED_PATH = ROOT / "results" / "merged_data.csv"
-OUT_DIR = ROOT / "results"
-OUT_FILE = OUT_DIR / "sp500_vs_sentiment.png"
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+DATA_PATH = Path("results/merged_data.csv")
+PLOT_PATH = Path("results/sp500_vs_sentiment.png")
+
 
 def main():
-    df = pd.read_csv(MERGED_PATH)
+    df = pd.read_csv(DATA_PATH)
+
+    
     df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date")
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    df["return"] = df["close"].pct_change()
 
-    fig, ax1 = plt.subplots(figsize=(12,6))
+    df = df.dropna(subset=["return", "sentiment_ma7"])
 
-    ax1.plot(df['date'], df['close'], color='blue', label='SP500')
-    ax1.set_xlabel('Date')
-    ax1.set_ylabel('SP500 Close Price', color='blue')
-    ax1.tick_params(axis='y', labelcolor='blue')
+    X = df[["sentiment_ma7"]]
+    X = sm.add_constant(X)  
+    y = df["return"]
 
-    ax2 = ax1.twinx()
+    model = sm.OLS(y, X).fit()
+    print(model.summary())
 
-    ax2.plot(df['date'], df['sentiment_ma7'], color='red', label='Sentiment (MA7)')
-    ax2.set_ylabel('Sentiment Index', color='red')
-    ax2.tick_params(axis='y', labelcolor='red')
+    plt.figure(figsize=(8, 5))
 
-    plt.title("SP500 vs WSB Sentiment (MA7)")
+    
+    plt.scatter(df["sentiment_ma7"], df["return"], alpha=0.4, label="Daily Data")
 
+    
+    x_vals = np.linspace(df["sentiment_ma7"].min(), df["sentiment_ma7"].max(), 200)
+    X_line = sm.add_constant(x_vals)
+    y_pred = model.predict(X_line)
+
+    plt.plot(x_vals, y_pred, linewidth=2, label="Regression Line")
+
+    plt.xlabel("WSB Sentiment (MA7)")
+    plt.ylabel("S&P 500 Daily Return")
+    plt.title("Regression: Sentiment → Return")
+    plt.legend()
     plt.tight_layout()
-    plt.savefig(OUT_FILE)
+
+
+    PLOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(PLOT_PATH)
     plt.close()
 
-    print(f"Plot saved to: {OUT_FILE}")
 
 if __name__ == "__main__":
     main()
