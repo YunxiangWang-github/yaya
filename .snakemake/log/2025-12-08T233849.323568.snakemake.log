@@ -1,0 +1,8 @@
+Assuming unrestricted shared filesystem usage.
+host: wyxMacBook-Air-3.local
+Building DAG of jobs...
+MissingInputException in rule clean_wsb in file "/Users/wyx/Desktop/yaya/workflow/Snakefile", line 23:
+Missing input files for rule clean_wsb:
+    output: data/wsb_daily_sentiment.csv
+    affected files:
+        data/wallstreetbets_2022.csv

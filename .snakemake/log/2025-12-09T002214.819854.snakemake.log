@@ -1,0 +1,37 @@
+Assuming unrestricted shared filesystem usage.
+host: wyxMacBook-Air-3.local
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+all                 1
+plot_results        1
+total               2
+
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  9 00:22:14 2025]
+localrule plot_results:
+    input: results/merged_data.csv
+    output: results/sp500_vs_sentiment.png
+    jobid: 1
+    reason: Missing output files: results/sp500_vs_sentiment.png
+    resources: tmpdir=/var/folders/jc/pcj1xc555l99w6f60p_8r47m0000gn/T
+[Tue Dec  9 00:22:17 2025]
+Finished jobid: 1 (Rule: plot_results)
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  9 00:22:17 2025]
+localrule all:
+    input: results/sp500_vs_sentiment.png
+    jobid: 0
+    reason: Input files updated by another job: results/sp500_vs_sentiment.png
+    resources: tmpdir=/var/folders/jc/pcj1xc555l99w6f60p_8r47m0000gn/T
+[Tue Dec  9 00:22:17 2025]
+Finished jobid: 0 (Rule: all)
+2 of 2 steps (100%) done
+Complete log(s): /Users/wyx/Desktop/yaya/.snakemake/log/2025-12-09T002214.819854.snakemake.log

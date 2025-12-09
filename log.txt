@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/wyx/Desktop/yaya/scripts/clean_wsb.py", line 1, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'

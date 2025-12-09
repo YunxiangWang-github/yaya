@@ -1,0 +1,8 @@
+Assuming unrestricted shared filesystem usage.
+host: wyxMacBook-Air-3.local
+Building DAG of jobs...
+MissingInputException in rule plot_results in file "/Users/wyx/Desktop/yaya/Snakefile", line 42:
+Missing input files for rule plot_results:
+    output: results/sp500_vs_sentiment.png
+    affected files:
+        results/merged_data.csv

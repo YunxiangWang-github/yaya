@@ -1,0 +1,8 @@
+Assuming unrestricted shared filesystem usage.
+host: wyxMacBook-Air-3.local
+Building DAG of jobs...
+MissingInputException in rule merge_data in file "/Users/wyx/Desktop/yaya/Snakefile", line 31:
+Missing input files for rule merge_data:
+    output: results/merged_data.csv
+    affected files:
+        data/wsb_daily_sentiment.csv

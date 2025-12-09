@@ -1,0 +1,49 @@
+Assuming unrestricted shared filesystem usage.
+host: wyxMacBook-Air-3.local
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+all                 1
+merge_data          1
+plot_results        1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+[Tue Dec  9 00:14:15 2025]
+localrule merge_data:
+    input: data/sp500_clean.csv, data/wsb_daily_sentiment.csv
+    output: results/merged_data.csv
+    jobid: 2
+    reason: Missing output files: results/merged_data.csv
+    resources: tmpdir=/var/folders/jc/pcj1xc555l99w6f60p_8r47m0000gn/T
+RuleException:
+CalledProcessError in file "/Users/wyx/Desktop/yaya/Snakefile", line 38:
+Command 'set -euo pipefail;  python scripts/merge_data.py' returned non-zero exit status 1.
+[Tue Dec  9 00:14:15 2025]
+Error in rule merge_data:
+    message: None
+    jobid: 2
+    input: data/sp500_clean.csv, data/wsb_daily_sentiment.csv
+    output: results/merged_data.csv
+    shell:
+        python scripts/merge_data.py
+        (command exited with non-zero exit code)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Tue Dec  9 00:14:15 2025]
+Error in rule merge_data:
+    message: None
+    jobid: 2
+    input: data/sp500_clean.csv, data/wsb_daily_sentiment.csv
+    output: results/merged_data.csv
+    shell:
+        python scripts/merge_data.py
+        (command exited with non-zero exit code)
+Complete log(s): /Users/wyx/Desktop/yaya/.snakemake/log/2025-12-09T001415.038773.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
